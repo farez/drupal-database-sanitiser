@@ -67,6 +67,8 @@ sanitize_test_db:
 
 `field_rules` is how you decide what happens to personal data in content. Actions are `email`, `phone`, `text`, `blank` and `keep`.
 
+To have an AI coding agent research the site and write `drush/drush.yml` for you, use the prompt in [docs/ai-setup-prompt.md](docs/ai-setup-prompt.md). The agent doesn't run the sanitiser, so review the file and do the dry run yourself.
+
 It is advised that you test it on a database first.
 
 ## Tests
@@ -86,3 +88,5 @@ vendor/bin/phpunit -c vendor/southwark/drush-sanitize-test-db/phpunit.xml.dist
 - every `sanitize_test_db` option
 - the coverage report — how to find personal data that no rule covers yet
 - caveats and CI setup
+
+[docs/ai-setup-prompt.md](docs/ai-setup-prompt.md) is a copy-paste prompt for an AI coding agent to write a site's `drush/drush.yml`.
