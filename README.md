@@ -1,4 +1,4 @@
-# drush-sanitize-test-db
+# Drupal database sanitiser
 
 Extends `drush sql:sanitize` so it can turn a copy of a Drupal production or dev database into one that's safe for local automated testing. It runs in a local dev environment only, has a `--dry-run` option, and sanitises far more than Drush core does. It also verifies the sanitisation.
 
