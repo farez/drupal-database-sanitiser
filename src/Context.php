@@ -99,6 +99,13 @@ final class Context {
   }
 
   /**
+   * Bundles of an entity type, keyed by bundle name.
+   */
+  public function bundleInfo(string $entity_type_id): array {
+    return \Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type_id);
+  }
+
+  /**
    * Active config storage for every collection, keyed by collection name.
    *
    * @return array<string, StorageInterface>

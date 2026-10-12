@@ -63,12 +63,13 @@ sanitize_test_db:
     node.field_case_officer_email: email   # → user+<entity id>@<email_domain>
     node.field_venue_phone: phone          # → 020 7946 0000 (Ofcom drama number)
     paragraph.field_private_notes: blank   # values deleted
+    taxonomy_term.form_owners.name: 'text:Form owner %id'   # one vocabulary only → "Form owner 12"
   extra_tables:                            # tables to empty (globs)
     - mymodule_audit_log
     - 'legacy_*'
 ```
 
-`field_rules` is how you decide what happens to personal data in content. Actions are `email`, `phone`, `text`, `blank` and `keep`.
+`field_rules` is how you decide what happens to personal data in content. Actions are `email`, `phone`, `text`, `text:<template>` (`%id` becomes the entity ID), `blank` and `keep`. Key a rule as `<entity_type>.<field>` for every bundle, or `<entity_type>.<bundle>.<field>` for one bundle, such as a single vocabulary.
 
 `extra_tables` lists the tables to empty completely, such as custom log, queue or legacy tables. These are added to the built-in list (`watchdog`, `flood`, `cache_*` and so on). Glob patterns like `'legacy_*'` need quotes in YAML.
 

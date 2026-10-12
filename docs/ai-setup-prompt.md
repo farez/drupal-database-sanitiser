@@ -56,7 +56,8 @@ Collect these facts. For each one, note where it came from: a file path, a confi
 
 ## 2. Decide, using these rules
 
-- **`field_rules`** (`<entity_type>.<field_name>: email | phone | text | blank | keep`):
+- **`field_rules`** (`<entity_type>.<field_name>` or `<entity_type>.<bundle>.<field_name>`: `email | phone | text | 'text:<template>' | blank | keep`, where `%id` in a template becomes the entity ID):
+  - Use the bundle form when only some bundles hold personal data, e.g. `taxonomy_term.form_owners.name: 'text:Form owner %id'` renames the terms in one vocabulary that are named after people.
   - Personal data about individuals gets `email`, `phone`, `text` or `blank`, whichever suits the field. That includes:
     - members of the public, applicants and case details
     - unpublished staff details

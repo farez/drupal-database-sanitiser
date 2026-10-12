@@ -80,9 +80,28 @@ sanitize_test_db:
     node.field_applicant_name: text        # → "Sanitised text"
     paragraph.field_private_notes: blank   # values deleted
     node.field_public_email: keep          # reviewed, leave as is
+    taxonomy_term.form_owners.name: 'text:Form owner %id'   # one vocabulary only → "Form owner 12"
 ```
 
 `extra_tables` lists the tables to empty. Entries are table names or globs (`'legacy_*'`, quoted because of the `*`) and are added to the defaults shown under "Tables" in [What a run does](#what-a-run-does). Each matching table is truncated, then checked to be empty. A pattern that matches no table is ignored. `tables_exclude` wins over both lists, so use it to keep a table that a default glob would empty.
+
+Field rule keys take one of two forms:
+
+- `<entity_type>.<field_name>` applies to every bundle that has the field.
+- `<entity_type>.<bundle>.<field_name>` applies to that bundle only: one vocabulary, content type, media type and so on. For example, `taxonomy_term.form_owners.name` renames the terms in the `form_owners` vocabulary and leaves every other vocabulary alone. Base fields such as a term's `name` or a node's `title` work too.
+
+Actions:
+
+| Action | Result |
+|---|---|
+| `email` | `user+<entity id>@<email_domain>` |
+| `phone` | `020 7946 0000` (Ofcom drama number) |
+| `text` | `Sanitised text` |
+| `text:<template>` | the template, with `%id` replaced by the entity ID. `'text:Form owner %id'` gives `Form owner 12`. Quote it in YAML. `%id` may appear once, or not at all for a fixed value. |
+| `blank` | values deleted |
+| `keep` | reviewed, left as is |
+
+Only values that are already set are changed. A bundle-scoped rule doesn't cover the field's other bundles, so the coverage report still lists the field until it has a rule without a bundle, or a `keep`.
 
 `field_rules` works on any fieldable entity type, custom ones included. It updates the field's data and revision tables. An unknown entity type, field or action is a configuration error: the dry run lists it, and a real run refuses to start.
 

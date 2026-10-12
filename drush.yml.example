@@ -26,3 +26,4 @@ sanitize_test_db:
     node.field_applicant_name: text        # → "Sanitised text"
     paragraph.field_private_notes: blank   # values deleted
     node.field_public_email: keep          # reviewed, leave as is
+    taxonomy_term.form_owners.name: 'text:Form owner %id'   # one vocabulary only → "Form owner 12"
