@@ -66,7 +66,7 @@ sanitize_test_db:
   prod_markers: [settings.prod.php]
   deny_uri_hosts: [www.example.gov.uk, '*.example.gov.uk']
   local_url_suffixes: []        # added to the defaults
-  extra_tables: []              # globs, added to the defaults
+  extra_tables: [mymodule_audit_log, 'legacy_*']   # globs: tables to empty, added to the defaults
   tables_exclude: []            # globs, added to [SimpleSAMLphp_tableVersion]
   config_email_exclude: []      # "config.name" or "config.name:key.path" globs
   keep_emails: []               # public addresses to leave alone
@@ -81,6 +81,8 @@ sanitize_test_db:
     paragraph.field_private_notes: blank   # values deleted
     node.field_public_email: keep          # reviewed, leave as is
 ```
+
+`extra_tables` lists the tables to empty. Entries are table names or globs (`'legacy_*'`, quoted because of the `*`) and are added to the defaults shown under "Tables" in [What a run does](#what-a-run-does). Each matching table is truncated, then checked to be empty. A pattern that matches no table is ignored. `tables_exclude` wins over both lists, so use it to keep a table that a default glob would empty.
 
 `field_rules` works on any fieldable entity type, custom ones included. It updates the field's data and revision tables. An unknown entity type, field or action is a configuration error: the dry run lists it, and a real run refuses to start.
 

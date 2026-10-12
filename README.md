@@ -63,9 +63,14 @@ sanitize_test_db:
     node.field_case_officer_email: email   # → user+<entity id>@<email_domain>
     node.field_venue_phone: phone          # → 020 7946 0000 (Ofcom drama number)
     paragraph.field_private_notes: blank   # values deleted
+  extra_tables:                            # tables to empty (globs)
+    - mymodule_audit_log
+    - 'legacy_*'
 ```
 
 `field_rules` is how you decide what happens to personal data in content. Actions are `email`, `phone`, `text`, `blank` and `keep`.
+
+`extra_tables` lists the tables to empty completely, such as custom log, queue or legacy tables. These are added to the built-in list (`watchdog`, `flood`, `cache_*` and so on). Glob patterns like `'legacy_*'` need quotes in YAML.
 
 To have an AI coding agent research the site and write `drush/drush.yml` for you, use the prompt in [docs/ai-setup-prompt.md](docs/ai-setup-prompt.md). The agent doesn't run the sanitiser, so review the file and do the dry run yourself.
 
